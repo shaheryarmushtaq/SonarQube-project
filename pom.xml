@@ -12,9 +12,10 @@
   <name>My Simple App</name>
   <url>http://maven.apache.org</url>
 
-  <!-- SonarQube properties -->
   <properties>
     <sonar.projectKey>my-simple-app</sonar.projectKey>
+    <sonar.projectName>My Simple App</sonar.projectName>
+    <!-- SonarQube server URL -->
     <sonar.host.url>http://38.45.71.12:9000</sonar.host.url>
   </properties>
 
@@ -58,8 +59,8 @@
           </includes>
         </configuration>
       </plugin>
-      
-      <!-- SonarQube plugin -->
+
+      <!-- Sonar plugin for Maven to connect to SonarQube -->
       <plugin>
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
