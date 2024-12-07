@@ -12,6 +12,12 @@
   <name>My Simple App</name>
   <url>http://maven.apache.org</url>
 
+  <!-- SonarQube properties -->
+  <properties>
+    <sonar.projectKey>my-simple-app</sonar.projectKey>
+    <sonar.host.url>http://38.45.71.12:9000</sonar.host.url>
+  </properties>
+
   <dependencies>
     <!-- JUnit for testing -->
     <dependency>
@@ -52,8 +58,14 @@
           </includes>
         </configuration>
       </plugin>
+      
+      <!-- SonarQube plugin -->
+      <plugin>
+        <groupId>org.sonarsource.scanner.maven</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+        <version>3.9.1.2184</version>
+      </plugin>
     </plugins>
   </build>
 
 </project>
-
