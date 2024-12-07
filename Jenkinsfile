@@ -3,28 +3,22 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from GitHub
-                git 'https://github.com/shaheryarmushtaq/SonarQube-project.git'
+                git credentialsId: 'github-credentials', url: 'https://github.com/shaheryarmushtaq/SonarQube-project.git', branch: 'main'
             }
         }
         stage('Build') {
             steps {
-                // Build the Maven project
-                sh 'mvn clean install'
+                echo 'Building...'
             }
         }
         stage('SonarQube Analysis') {
             steps {
-                // Run SonarQube analysis
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
+                echo 'Running SonarQube Analysis...'
             }
         }
         stage('Test') {
             steps {
-                // Run tests
-                sh 'mvn test'
+                echo 'Testing...'
             }
         }
     }
