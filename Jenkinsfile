@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        SONARQUBE_TOKEN = credentials('Jenkins-Sonar') // Use the token stored as Jenkins-Sonar
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -18,14 +15,13 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                // Run SonarQube analysis
-                withSonarQubeEnv('SonarQube') { // Replace 'SonarQube' with the name of the SonarQube server in Jenkins configuration
-                    sh '''
-                    mvn sonar:sonar \
-                        -Dsonar.projectKey=my-simple-app \
-                        -Dsonar.host.url=http://38.45.71.12:9000 \
-                        -Dsonar.login=$SONARQUBE_TOKEN
-                    '''
+                // Inject SonarQube token and run analysis
+                withCredentials([string(credentialsId: 'sonar-token-id', variable: 'SONARQUBE_TOKEN')]) {
+                    // Run SonarQube analysis
+                    withSonarQubeEnv('SonarQube') {
+                        // SonarQube server URL
+                        sh 'mvn sonar:sonar -Dsonar.login=$SONARQUBE_TOKEN -Dsonar.host.url=http://38.45.71.12:9000'
+                    }
                 }
             }
         }
